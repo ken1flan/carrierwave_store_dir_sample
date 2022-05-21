@@ -12,19 +12,20 @@ class ArticlesController < ApplicationController
 
   # GET /articles/new
   def new
-    @article = Article.new
+    @article = Form::Article.new
   end
 
   # GET /articles/1/edit
   def edit
+    @article.becomes(Form::Article)
   end
 
   # POST /articles
   def create
-    @article = Article.new(article_params)
+    @article = Form::Article.new(article_params)
 
     if @article.save
-      redirect_to @article, notice: "Article was successfully created."
+      redirect_to article_path(@article), notice: "Article was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -32,6 +33,7 @@ class ArticlesController < ApplicationController
 
   # PATCH/PUT /articles/1
   def update
+    @article.becomes(Form::Article)
     if @article.update(article_params)
       redirect_to @article, notice: "Article was successfully updated."
     else
